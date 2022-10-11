@@ -1,48 +1,49 @@
-import tkinter
-from PIL import Image, ImageTk
+import os
 import random
+import tkinter
+
+from PIL import Image, ImageTk
 
 # toplevel widget which represents the main window of an application
 root = tkinter.Tk()
 root.geometry('400x400')
 root.title('Group-1 Roll the Dice')
 
-# Adding label into the frame
-l0 = tkinter.Label(root, text="")
-l0.pack()
-
 # adding label with different font and formatting
-l1 = tkinter.Label(root, text="Welcome! Please Click Roll the Dice", fg = "light green",
-        bg = "dark green",
-        font = "Helvetica 16 bold italic")
-l1.pack()
+welcome_label = tkinter.Label(root, text="Welcome! Please Click Roll the Dice",
+                              fg="black", font="Helvetica 16 bold italic",
+                              pady=20)
+welcome_label.pack()
 
 # images
-dice = ['die1.png', 'die2.png', 'die3.png', 'die4.png', 'die5.png', 'die6.png']
+dices = os.listdir("resources/")
 # simulating the dice with random numbers between 0 to 6 and generating image
-image1 = ImageTk.PhotoImage(Image.open(random.choice(dice)))
+image = ImageTk.PhotoImage(Image.open("resources/"+random.choice(dices)))
 
 # construct a label widget for image
-label1 = tkinter.Label(root, image=image1)
-label1.image = image1
+diceImage = tkinter.Label(root, image=image)
+diceImage.image = image
 
-# packing a widget in the parent widget 
-label1.pack( expand=True)
+# packing a widget in the parent widget
+diceImage.pack(expand=True)
 
 # function activated by button
+
+
 def rolling_dice():
-    image1 = ImageTk.PhotoImage(Image.open(random.choice(dice)))
+    image = ImageTk.PhotoImage(Image.open(("resources/"+random.choice(dices))))
     # update image
-    label1.configure(image=image1)
+    diceImage.configure(image=image)
     # keep a reference
-    label1.image = image1
+    diceImage.image = image
 
 
 # adding button, and command will use rolling_dice function
-button = tkinter.Button(root, text='Roll the Dice', fg='blue', command=rolling_dice)
+button = tkinter.Button(root, text='Roll the Dice',
+                        fg='blue', command=rolling_dice)
 
 # pack a widget in the parent widget
-button.pack( expand=True)
+button.pack(expand=True)
 
 # call the mainloop of Tk
 # keeps window open
